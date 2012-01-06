@@ -1,0 +1,9 @@
+class ResourceRemoveStatus < ActiveRecord::Migration
+  def up
+    remove_column :resource, :status
+  end
+
+  def down
+    add_column :resource, :status, :string
+  end
+end

@@ -1,0 +1,22 @@
+<h1>Listing download jobs</h1>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Status</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @download_jobs.each do |download_job| %>
+  <tr>
+    <td><%= download_job.title %></td>
+    <td><%= download_job.status %></td>
+    <td><%= link_to 'Show', download_job %></td>
+    <td><%= link_to 'Edit', edit_download_job_path(download_job) %></td>
+    <td><%= link_to 'Destroy', download_job, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+

@@ -1,0 +1,17 @@
+<p id="notice"><%= notice %></p>
+
+<h1><%= @download_job.title %></h1>
+
+<h2><%= @download_job.status %></h2>
+
+<p>
+  <a href="<%= @download_job.url %>"><%= @download_job.url %></a>
+</p>
+
+<p>
+  <em>Tagged:</em>
+  <%= @download_job.tag_names %>
+</p>
+
+<%= link_to 'Edit', edit_download_job_path(@download_job) %> |
+<%= link_to 'Back', download_jobs_path %>
