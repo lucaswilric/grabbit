@@ -13,3 +13,7 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+
+# Ignore files containing passwords... duh...
+/client/*_test.rb
+/client/config.rb
