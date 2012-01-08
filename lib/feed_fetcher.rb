@@ -31,31 +31,26 @@ class FeedFetcher
     xml = fetch(sub.resource.url, false).body
     sub.resource.touch
 
-    rss = RSS::Parser.parse(xml, false)
-
     new_item_count = 0
-#    @logger.debug "#{ rss.items.length } RSS items"
 
-    # reverse the list so that download_jobs are created in chronological order
-    rss.items.reverse.each do |item|
-    
-#      @logger.debug item.date.to_s + " " + sub.startDate.to_s
-    
-      next if item.date < sub.created_at
+    if rss = RSS::Parser.parse(xml, false)
+      # reverse the list so that download_jobs are created in chronological order
+      rss.items.reverse.each do |item|
+          
+        next if item.date < sub.created_at
 
-      item_url = get_url item, sub.url_element
-      next unless item_url
+        item_url = get_url item, sub.url_element
+        next unless item_url
 
-      unless DownloadJob.find_by_url(item_url)
-#        @logger.debug "Creating " + get_name(item,sub)
-        begin
-          dl = DownloadJob.create :subscription => sub, :title => get_name(item,sub), :url => item_url
-        rescue => ex
-#          @logger.debug ex.to_s
-          raise
+        unless DownloadJob.find_by_url(item_url)
+          begin
+            dl = DownloadJob.create :subscription => sub, :title => get_name(item,sub), :url => item_url
+          rescue => ex
+            raise
+          end
+
+          new_item_count += 1
         end
-
-        new_item_count += 1
       end
     end
 
