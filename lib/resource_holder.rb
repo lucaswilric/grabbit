@@ -4,7 +4,7 @@ module ResourceHolder
   end
   
   def url=(value)
-    self.resource Resource.find_by_url(value) || Resource.new(:url => value)
+    self.resource = Resource.find_by_url(value) || Resource.new(:url => value)
     
     self.resource.save
     
