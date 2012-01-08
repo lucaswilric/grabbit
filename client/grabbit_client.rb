@@ -24,7 +24,9 @@ DownloadJobRunner.new().run_jobs(jobs, false) do |job, subscription|
   
   # If it's a torrent, try to add it to Transmission
   if file_name.match(/.torrent\Z/)
-    TransmissionHelper.new(TransmissionConfig).add_torrent(dir, file_name)
+    r = TransmissionHelper.new(TransmissionConfig).add_torrent(dir, file_name)
+    
+    puts "Added torrent '#{r['name']}'."
   end  
 end
 
