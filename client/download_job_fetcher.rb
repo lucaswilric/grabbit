@@ -7,7 +7,7 @@ require 'json'
 class DownloadJobFetcher
   include HttpFetcher
   
-  FeedUrl = "#{GrabbitUrl}/download_jobs/tagged/pug/feed"
+  FeedUrl = "#{GrabbitUrl}/download_jobs/tagged/#{GrabbitTag}/feed"
   SubscriptionUrl = "#{GrabbitUrl}/subscriptions"
 
   def get_download_jobs
