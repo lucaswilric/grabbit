@@ -16,6 +16,8 @@ class DownloadJobHelper
       job['directory']
     elsif subscription and subscription['destination'] and subscription['destination'] != ""
       subscription['destination']
+    else
+      ""
     end
   end
 end

@@ -61,7 +61,7 @@ class DownloadJobRunner
     # Copy the contents of DestinationRoot to a new instance, so we don't mutate the original.
     dir_path = String.new(DestinationRoot)
      
-    dir_path << DownloadJobHelper.directory(job, subscription) 
+    dir_path << "/" + DownloadJobHelper.directory(job, subscription)
             
     dir_path = File.expand_path(dir_path.chomp('/'))
 
