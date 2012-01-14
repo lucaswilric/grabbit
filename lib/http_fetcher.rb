@@ -4,12 +4,16 @@ module HttpFetcher
 
     uri = URI.parse(uri_str)
     response = Net::HTTP.start(uri.host, uri.port) do |http|
-      http.get uri.path, { 'Cache-Control' => 'no-cache' }
+      begin
+        http.get uri.path, { 'Cache-Control' => 'no-cache' }
+      rescue
+        raise uri_str
+      end
     end
-
+    
     case response
     when Net::HTTPSuccess     then response
-    when Net::HTTPRedirection then fetch(response['location'], limit - 1)
+    when Net::HTTPRedirection then fetch(response['location'], cache, limit - 1)
     else
       response.error!
     end
