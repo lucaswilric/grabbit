@@ -7,7 +7,7 @@ class FeedFetcher
   @logger = Rails.logger
 
   def self.fetch_all_feeds(tag = nil)
-    @logger.debug "#{ Time.zone.now } [DEBUG] Starting FeedFetcher#fetch_all_feeds, tags = #{ tag_list }"
+    @logger.debug "#{ Time.zone.now } [DEBUG] Starting FeedFetcher#fetch_all_feeds, tag = #{ tag }"
 
     Subscription.all.each do |sub|
       begin
@@ -31,7 +31,7 @@ class FeedFetcher
 
     new_item_count = 0
 
-    if rss = RSS::Parser.parse(xml)
+    if rss = RSS::Parser.parse(xml, false)
       # reverse the list so that download_jobs are created in chronological order
       rss.items.reverse.each do |item|
 
