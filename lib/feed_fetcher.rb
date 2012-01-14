@@ -4,18 +4,16 @@ require 'rss'
 class FeedFetcher
   extend HttpFetcher
 
-#  @logger = RAILS_DEFAULT_LOGGER
+  @logger = Rails.logger
 
   def self.fetch_all_feeds(tag = nil)
-#    @logger.debug "#{ Time.zone.now } [DEBUG] Starting FeedFetcher#fetch_all_feeds, tags = #{ tag_list }"
+    @logger.debug "#{ Time.zone.now } [DEBUG] Starting FeedFetcher#fetch_all_feeds, tags = #{ tag_list }"
 
-    conditions = tag ? [] : ['tags.name = (?)', tag]
-  
-    Subscription.find(:all, :conditions => conditions).each do |sub|
+    Subscription.all.each do |sub|
       begin
         fetch_feed sub
       rescue RSS::NotWellFormedError
-#        @logger.error "[ERROR] #{ Time.zone.now } RSS XML at #{ sub.url } was not well formed."
+        @logger.error "[ERROR] #{ Time.zone.now } RSS XML at #{ sub.url } was not well formed."
         next
       end
     end
@@ -25,7 +23,7 @@ class FeedFetcher
   # Returns the number of new items created, to make testing easier.
   def self.fetch_feed(sub)
   
-    return 0 if (sub.resource.updated_at || Time.at(0)) > 1.hour.ago
+    @logger.warn "Fetching RSS from " + sub.title + " at " + sub.url
   
     # Get the feed
     xml = fetch(sub.resource.url, false).body
@@ -33,14 +31,15 @@ class FeedFetcher
 
     new_item_count = 0
 
-    if rss = RSS::Parser.parse(xml, false)
+    if rss = RSS::Parser.parse(xml)
       # reverse the list so that download_jobs are created in chronological order
       rss.items.reverse.each do |item|
-          
-        next if item.date < sub.created_at
 
         item_url = get_url item, sub.url_element
-        next unless item_url
+        
+        @logger.warn item_url
+        
+        next unless item_url and item.date > sub.created_at
 
         unless DownloadJob.find_by_url(item_url)
           begin
@@ -52,6 +51,8 @@ class FeedFetcher
           new_item_count += 1
         end
       end
+    else
+      @logger.warn "Could not parse RSS from " + sub.resource.url
     end
 
     new_item_count
@@ -67,8 +68,7 @@ class FeedFetcher
     end
 
     # Return nil instead of an empty string
-    item_url = nil if item_url == ''
-    item_url
+    item_url.blank? ? nil : item_url
   end
 
   def self.get_name(item, sub)
