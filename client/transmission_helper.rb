@@ -22,8 +22,17 @@ class TransmissionHelper
     end
   end
   
-  def add_torrent(directory, file_name)
-    r = JSON.parse get_response("torrent-add", {"filename" => "#{directory}/#{file_name}", "download-dir" => directory}).body
+  def add_torrent_url(url, directory)
+    add_torrent url, directory
+  end
+    
+  def add_torrent_file(file_name, directory)
+    add_torrent "#{directory}/#{file_name}", directory
+  end
+  
+  private
+  def add_torrent(file_path, directory)
+    r = JSON.parse get_response("torrent-add", {"filename" => file_path, "download-dir" => directory}).body
 
     if r['result'] == 'success'
       r['arguments']['torrent-added']
@@ -32,7 +41,6 @@ class TransmissionHelper
     end
   end
   
-  private
   def get_response(method, arguments = nil)
     uri = URI.parse(@transmission_url)
     

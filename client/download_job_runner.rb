@@ -1,6 +1,3 @@
-require 'http_fetcher'
-require 'net/http'
-
 require 'config'
 
 class DownloadJobRunner
@@ -33,12 +30,7 @@ class DownloadJobRunner
       subscription = DownloadJobFetcher.new().get_subscription(job['subscription_id']) if job['subscription_id']
       
       begin
-        destination = get_destination_for job, subscription
-        
-        open(destination, "wb") do |file|
-          file.write( fetch(job['url']).body )
-        end
-
+      
         yield job, subscription if block_given?
 
         update job, :finished if do_update
@@ -47,30 +39,5 @@ class DownloadJobRunner
         raise
       end
     end
-  end
-  
-  def get_destination_for(job, subscription)
-    dir_path = get_path_for job, subscription
-
-    file_name = DownloadJobHelper.file_name(job, subscription)
-    
-    destination = "#{ dir_path }/#{ file_name }"
-  end
-
-  def get_path_for(job, subscription)
-    # Copy the contents of DestinationRoot to a new instance, so we don't mutate the original.
-    dir_path = String.new(DestinationRoot)
-     
-    dir_path << "/" + DownloadJobHelper.directory(job, subscription)
-            
-    dir_path = File.expand_path(dir_path.chomp('/'))
-
-    unless dir_path.match /\A#{ DestinationRoot.chomp('/') }/
-      raise "Download #{ job.id } tried to save outside '#{ DestinationRoot }', in #{ dir_path }"
-    end
-    
-    Dir.mkdir(dir_path, 0777) unless File.directory?(dir_path)
-
-    dir_path
   end
 end
