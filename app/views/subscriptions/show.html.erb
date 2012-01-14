@@ -11,6 +11,11 @@
 </p>
 
 <p>
+  <b>Extension:</b>
+  <%= @subscription.extension.present? ? '.' + @subscription.extension : '' %>
+</p>
+
+<p>
   <b>URL:</b>
   <a href="<%= @subscription.url %>"><%= @subscription.url %></a>
 </p>
