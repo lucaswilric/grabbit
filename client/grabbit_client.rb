@@ -16,7 +16,7 @@ jobs = DownloadJobFetcher.new().get_download_jobs
 
 puts "#{ jobs.length } item(s)."
 
-DownloadJobRunner.new().run_jobs(jobs, false) do |job, subscription|
+DownloadJobRunner.new().run_jobs(jobs) do |job, subscription|
   dir = DownloadJobHelper.directory(job, subscription)
   file_name = DownloadJobHelper.file_name(job, subscription)
 
