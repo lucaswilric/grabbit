@@ -38,16 +38,18 @@ def get_path_for(job, subscription)
     raise "Download #{ job.id } tried to save outside '#{ DestinationRoot }', in #{ dir_path }"
   end
     
-  make_directory dir_path unless File.directory?(dir_path)
+  make_directory dir_path
 
   dir_path
 end
   
 def make_directory(dir_path)
+  return if File.directory? dir_path
+
   puts "Making directory '#{dir_path}'." 
     
   parent_path = dir_path[0..dir_path.rindex('/')].chomp('/')
-  make_directory(parent_path) unless File.directory?(parent_path)
+  make_directory(parent_path)
     
   Dir.mkdir(dir_path, 0777)
 end
