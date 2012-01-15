@@ -51,7 +51,11 @@ def make_directory(dir_path)
   parent_path = dir_path[0..dir_path.rindex('/')].chomp('/')
   make_directory(parent_path)
     
+  umask = File.umask(0000)
+
   Dir.mkdir(dir_path, 0777)
+
+  File.umask(umask)
 end
 
 def add_to_transmission(job, subscription, dir)
