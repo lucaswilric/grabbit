@@ -27,7 +27,7 @@ class TorrentProcessor
           "download_job[url]" => "#{FtpRoot}/#{dir}#{dir==''?'':'/'}#{file['name']}"
         }
 
-#        puts "Creating job for '#{FtpRoot}/#{dir}#{dir==''?'':'/'}#{file['name']}'"
+        puts "Creating job for '#{FtpRoot}/#{dir}#{dir==''?'':'/'}#{file['name']}'"
         r = @djc.create_job(attributes)
         
         # Raise unless we get success back, or the error message expected.
