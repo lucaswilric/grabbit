@@ -34,7 +34,7 @@ def save_file(job, subscription, dir)
   puts "Downloaded #{job['url']} to #{dir}."
 end
 
-jobs = DownloadJobFetcher.new().get_download_jobs(GrabbitTag)
+jobs = DownloadJobFetcher.new(GrabbitTag).get_download_jobs()
 
 puts "#{ jobs.length } item(s)."
 
