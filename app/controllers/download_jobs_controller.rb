@@ -105,4 +105,10 @@ class DownloadJobsController < ApplicationController
       format.json { head :ok }
     end
   end
+  
+  def search
+    @download_jobs = DownloadJob.where(:url => params[:url]).order('download_jobs.id desc').limit(10)
+    
+    render :json => @download_jobs
+  end
 end

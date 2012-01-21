@@ -1,5 +1,7 @@
 Grabbit3::Application.routes.draw do
-  resources :download_jobs
+  resources :download_jobs do
+    post 'search', :on => :collection
+  end
 
   resources :subscriptions do
     resources :download_jobs

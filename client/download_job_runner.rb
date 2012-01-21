@@ -1,4 +1,4 @@
-require 'config'
+require 'http_fetcher'
 
 class DownloadJobRunner
   include HttpFetcher

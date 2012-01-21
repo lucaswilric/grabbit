@@ -13,7 +13,7 @@ class TransmissionHelper
   end
   
   def all_torrents()
-    r = JSON.parse get_response("torrent-get", {"fields" => ["id", "name", "downloadDir", "percentDone", "files"]}).body
+    r = JSON.parse get_response("torrent-get", {"fields" => ["id", "name", "downloadDir", "percentDone", "files", "isFinished"]}).body
 
     if r['result'] == 'success'
       r['arguments']['torrents']
@@ -28,6 +28,10 @@ class TransmissionHelper
     
   def add_torrent_file(file_name, directory)
     add_torrent "#{directory}/#{file_name}", directory
+  end
+  
+  def remove_torrent(id, delete_data)
+    get_response("torrent-remove", { "ids" => id, "delete-local-data" => delete_data})
   end
   
   private
