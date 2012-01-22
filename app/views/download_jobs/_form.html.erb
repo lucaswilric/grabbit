@@ -22,7 +22,12 @@
   <div class="field">
     <%= f.label :tag_names %><br />
     <%= f.text_field :tag_names %>
-  </div>  <div class="actions">
+  </div>
+  <div class="field">
+    <%= f.label :status %><br />
+    <%= f.select :status, Status.values %>
+  </div>
+  <div class="actions">
     <%= f.submit %>
   </div>
 <% end %>

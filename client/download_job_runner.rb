@@ -36,7 +36,7 @@ class DownloadJobRunner
         update job, :finished if do_update
       rescue
         update job, :failed if do_update
-        raise
+        puts $!
       end
     end
   end
