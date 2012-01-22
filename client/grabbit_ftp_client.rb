@@ -7,6 +7,14 @@ require 'download_job_helper'
 require 'download_job_runner'
 require 'download_job_fetcher'
 
+def safize(text)
+  text.gsub(/ /, '%20').gsub(/\[/, '%5B').gsub(/\]/, '%5D')
+end
+
+def unsafize(text)
+  text.gsub(/%20/, ' ').gsub(/%5B/, '[').gsub(/%5D/, ']')
+end
+
 path_parser = /(.*)\/([^\/]+)\Z/
 
 jobs = DownloadJobFetcher.new(FtpReadyTag).get_download_jobs()
@@ -14,9 +22,9 @@ jobs = DownloadJobFetcher.new(FtpReadyTag).get_download_jobs()
 puts "#{ jobs.length } item(s)."
 
 DownloadJobRunner.new().run_jobs(jobs.first(5)) do |job, subscription|
-  uri = URI.parse job['url']
-  directory = uri.path.sub(path_parser, '\1')
-  file_name = uri.path.sub(path_parser, '\2')
+  uri = URI.parse safize(job['url'])
+  directory = unsafize uri.path.sub(path_parser, '\1')
+  file_name = unsafize uri.path.sub(path_parser, '\2')
   
   puts "Getting '#{file_name}' from '#{directory}'."
   
