@@ -39,7 +39,7 @@ class FeedFetcher
         
         @logger.warn item_url
         
-        next unless item_url and item.date > sub.created_at
+        next unless item_url and (item.date || Time.at(0)) > sub.created_at
 
         unless DownloadJob.find_by_url(item_url)
           begin
