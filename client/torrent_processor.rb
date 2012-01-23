@@ -52,7 +52,7 @@ class TorrentProcessor
       finished = false
       waiting = false
       
-      DownloadJobFetcher.new.get_download_jobs_with_url(url).each do |job|
+      DownloadJobFetcher.new(FtpReadyTag).get_download_jobs_with_url(url).each do |job|
         case job['status']
           when 'Finished' then finished = true
           when 'Not Started' then waiting = true
