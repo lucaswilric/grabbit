@@ -27,7 +27,7 @@ class DownloadJobRunner
     jobs.each do |job|
       update job, :in_progress if do_update
       
-      subscription = DownloadJobFetcher.new().get_subscription(job['subscription_id']) if job['subscription_id']
+      subscription = DownloadJobFetcher.new('pug').get_subscription(job['subscription_id']) if job['subscription_id']
       
       begin
       
