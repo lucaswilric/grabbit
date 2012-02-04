@@ -5,7 +5,7 @@ class DownloadJobsController < ApplicationController
 
   protect_from_forgery :only => [ :delete ]
 
-  before_filter :default_format_json, :on => :feed
+  before_filter :default_format_json, :only => :feed
 
   def default_format_json
     request.format = "json" unless params[:format]
