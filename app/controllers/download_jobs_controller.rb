@@ -39,7 +39,8 @@ class DownloadJobsController < ApplicationController
     @download_jobs.sort! {|a,b| b.created_at <=> a.created_at }
     @download_jobs = @download_jobs.first(30)
     
-    @feed_updated_at = @download_jobs.first.updated_at || @download_jobs.first.created_at
+    @feed_updated_at = @download_jobs.first.updated_at || @download_jobs.first.created_at unless @download_jobs.empty?
+    @feed_updated_at = Time.now unless @feed_updated_at
     
     respond_to do |format|
       format.json { render :json => @download_jobs }
