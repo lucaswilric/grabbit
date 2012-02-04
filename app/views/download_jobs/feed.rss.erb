@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+	<channel>
+		<title>Grabbit feed for &quot;<%= @tag_name %>&quot;</title>
+		<link>http://grabbit/download_jobs/tagged/<%= @tag_name %>/feed.rss</link>
+		<language>en-us</language>
+		<pubDate><%= @feed_updated_at.to_formatted_s(:rfc822) %></pubDate>
+		<docs>http://cyber.law.harvard.edu/rss/rss.html</docs>
+		<generator>Grabbit v3</generator>
+		<% @download_jobs.each do |dj| %>
+		<item>
+			<title><%= dj.title %></title>
+			<link><%= root_url.chomp('/') + download_job_path(dj.id) %></link>
+			<guid><%= root_url.chomp('/') + download_job_path(dj.id) %></guid>
+			<pubDate><%= dj.updated_at.to_formatted_s(:rfc822) %></pubDate>
+			<enclosure url="<%= dj.url %>" />
+	  </item>
+    <% end %>
+  </channel>
+</rss>

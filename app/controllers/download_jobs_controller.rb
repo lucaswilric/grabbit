@@ -5,6 +5,12 @@ class DownloadJobsController < ApplicationController
 
   protect_from_forgery :only => [ :delete ]
 
+  before_filter :default_format_json, :on => :feed
+
+  def default_format_json
+    request.format = "json" unless params[:format]
+  end
+
   # GET /download_jobs
   # GET /download_jobs.json
   def index
@@ -24,15 +30,21 @@ class DownloadJobsController < ApplicationController
   
   # There should always be only one tag in params[].
   def feed
-    FeedFetcher.fetch_all_feeds params[:tag_name]
+    @tag_name = params[:tag_name]
+    FeedFetcher.fetch_all_feeds @tag_name
 
-    @download_jobs = DownloadJob.find_by_tag(params[:tag_name])
+    @download_jobs = DownloadJob.find_by_tag(@tag_name)
     
     @download_jobs.reject! {|d| not [Status[:not_started], Status[:retry]].include? d.status }
     @download_jobs.sort! {|a,b| b.created_at <=> a.created_at }
     @download_jobs = @download_jobs.first(30)
     
-    render :json => @download_jobs
+    @feed_updated_at = @download_jobs.first.updated_at || @download_jobs.first.created_at
+    
+    respond_to do |format|
+      format.json { render :json => @download_jobs }
+      format.rss { render :layout => false }
+    end
   end
   
   # GET /download_jobs/1
