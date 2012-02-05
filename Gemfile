@@ -33,3 +33,4 @@ gem 'jquery-rails'
 
 
 gem 'unicorn'
+gem 'thin'
