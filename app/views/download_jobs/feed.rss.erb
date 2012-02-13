@@ -10,10 +10,9 @@
 		<% @download_jobs.each do |dj| %>
 		<item>
 			<title><%= dj.title %></title>
-			<link><%= root_url.chomp('/') + download_job_path(dj.id) %></link>
-			<guid><%= root_url.chomp('/') + download_job_path(dj.id) %></guid>
+			<link><%= dj.url %></link>
+			<guid isPermaLink="true"><%= root_url.chomp('/') + download_job_path(dj.id) %></guid>
 			<pubDate><%= dj.updated_at.to_formatted_s(:rfc822) %></pubDate>
-			<enclosure url="<%= dj.url %>" />
 	  </item>
     <% end %>
   </channel>
