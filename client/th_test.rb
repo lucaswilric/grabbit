@@ -1,6 +1,6 @@
 #!/usr/bin/ruby
 
-require 'transmission_helper'
+require './transmission_helper'
 
 require 'rubygems'
 require 'json'

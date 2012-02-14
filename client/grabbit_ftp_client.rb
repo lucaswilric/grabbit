@@ -2,10 +2,10 @@
 
 require 'net/ftp'
 
-require 'config'
-require 'download_job_helper'
-require 'download_job_runner'
-require 'download_job_fetcher'
+require './config'
+require './download_job_helper'
+require './download_job_runner'
+require './download_job_fetcher'
 
 def safize(text)
   text.gsub(/ /, '%20').gsub(/\[/, '%5B').gsub(/\]/, '%5D')

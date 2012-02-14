@@ -1,7 +1,7 @@
 #!/usr/bin/ruby
 
-require 'download_job_creator'
-require 'config'
+require './download_job_creator'
+require './config'
 
 djc = DownloadJobCreator.new
 

@@ -1,18 +1,18 @@
 #!/usr/bin/ruby
 
-require 'http_fetcher'
+require './http_fetcher'
 require 'net/http'
 
 require 'rubygems'
 require 'json'
 
-require 'config'
+require './config'
 
-require 'download_job_runner'
-require 'download_job_fetcher'
-require 'download_job_helper'
+require './download_job_runner'
+require './download_job_fetcher'
+require './download_job_helper'
 
-require 'transmission_helper'
+require './transmission_helper'
   
 def add_to_transmission(job, subscription, dir)
   DownloadJobHelper.make_directory "#{DestinationRoot}/#{dir}"

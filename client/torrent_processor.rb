@@ -1,9 +1,9 @@
 #!/usr/bin/ruby
 
-require 'config'
-require 'transmission_helper'
-require 'download_job_creator'
-require 'download_job_fetcher'
+require './config'
+require './transmission_helper'
+require './download_job_creator'
+require './download_job_fetcher'
 
 class TorrentProcessor
   def initialize
