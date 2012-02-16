@@ -2,7 +2,8 @@
 <rss version="2.0">
 	<channel>
 		<title>Grabbit feed for &quot;<%= @tag_name %>&quot;</title>
-		<link>http://grabbit/download_jobs/tagged/<%= @tag_name %>/feed.rss</link>
+		<link><%= root_url.chomp('/') + download_jobs_path %>/tagged/<%= @tag_name %>/feed.rss</link>
+		<description>A list of items tagged "<%= @tag_name %>", from the Grabbit RSS feed combiner.</description>
 		<language>en-us</language>
 		<pubDate><%= @feed_updated_at.to_formatted_s(:rfc822) %></pubDate>
 		<docs>http://cyber.law.harvard.edu/rss/rss.html</docs>
