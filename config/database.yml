@@ -17,6 +17,10 @@ development:
 test:
   <<: *login
   database: grabbit3_test
+  
+uat:
+  <<: *login
+  database: grabbit3_production
 
 production:
   adapter: postgresql
