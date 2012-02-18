@@ -1,5 +1,8 @@
 require 'net/http'
 
+class NotFoundError < StandardError
+end
+
 module HttpFetcher
   def fetch(uri_str, cache = true, limit = 10)
     raise ArgumentError, 'Too many redirections!' if limit == 0
@@ -22,6 +25,8 @@ module HttpFetcher
       new_uri = absolutize response['location'], uri
       
       fetch(new_uri, cache, limit - 1)
+    when Net::HTTPNotFound    then
+      raise NotFoundError
     else
       raise "#{response.code} #{response.message} when requesting #{uri_str}"
     end

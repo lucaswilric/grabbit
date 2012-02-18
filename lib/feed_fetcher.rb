@@ -1,3 +1,5 @@
+require 'net/http'
+
 require 'http_fetcher'
 require 'rss'
 
@@ -26,7 +28,13 @@ class FeedFetcher
     @logger.warn "Fetching RSS from " + sub.title + " at " + sub.url
   
     # Get the feed
-    xml = fetch(sub.resource.url, false).body
+    begin
+      xml = fetch(sub.resource.url, false).body
+    rescue NotFoundError
+      @logger.warn "Did not find '#{sub.resource.url}'. Moving on."
+      return
+    end
+    
     sub.resource.touch
 
     new_item_count = 0
