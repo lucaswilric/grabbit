@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+ <title>Lucas's River of News</title>
  <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css" />
  <style type="text/css">
 	#grid-system { margin-left: 100px; }
@@ -45,8 +46,9 @@
 		},
 		getNewItems: function() {
 		  console.log('Getting new items...');
+		  var tag = location.href.match(/:\/\/([^\.])+\./)[0]
 		  $.ajax({
-			url: this.sourceURL.replace('{TAG}', 'reading'),
+			url: this.sourceURL.replace('{TAG}', tag.substr(3,tag.length-4),
 			success: this.addItems,
 			dataType: 'json'
 		  });
