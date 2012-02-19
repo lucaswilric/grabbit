@@ -41,11 +41,6 @@ puts "#{ jobs.length } item(s)."
 DownloadJobRunner.new().run_jobs(jobs) do |job, subscription|
   dir = DownloadJobHelper.directory(job, subscription)
 
-  # If it's a torrent, try to add it to Transmission
-  if subscription['extension'] == 'torrent'
-    add_to_transmission job, subscription, dir
-  else
-    save_file job, subscription, dir
-  end  
+  add_to_transmission job, subscription, dir
 end
 
