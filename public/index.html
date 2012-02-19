@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
- <title>Lucas's River of News</title>
+ <title><title>
  <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css" />
  <style type="text/css">
 	#grid-system { margin-left: 100px; }
@@ -11,7 +11,7 @@
 </head>
 <body>
 	<section id="grid-system">
-		<div class="page-header"><h1>Lucas's River of News</h1></div>
+		<div class="page-header"><h1></h1></div>
 		<div id="news"></div>
 		<hr />
 		<div id="footer">
@@ -22,7 +22,12 @@
 	<script type="text/javascript">
 	var RoN = {};
 	$(function(){
+    SubdomainTitleMap = {
+      'reading': "Lucas's Reading List",
+      'links': "Lucas's Linkblog"
+    };
 	  RoN = {
+	  tag: '',
 		sourceURL: '/download_jobs/tagged/{TAG}/feed',
 		maxItemsToDisplay: 100,
 		addItems: function(items) {
@@ -46,16 +51,22 @@
 		},
 		getNewItems: function() {
 		  console.log('Getting new items...');
-		  var tag = location.href.match(/:\/\/([^\.])+\./)[0];
 		  $.ajax({
-			url: this.sourceURL.replace('{TAG}', tag.substr(3,tag.length-4)),
+			url: this.sourceURL.replace('{TAG}', this.tag),
 			success: this.addItems,
 			dataType: 'json'
 		  });
 		  console.log('Done getting new items.');
 		  window.setTimeout(RoN.getNewItems, 300000);
 		},
-		removeOldItems: function() {}
+		removeOldItems: function() {},
+    startEverything: function() {
+      var t = location.href.match(/:\/\/([^\.])+\./)[0];
+		  this.tag = t.substr(3,tag.length-4);
+      $('.page-header h1').text(SubdomainTitleMap[this.tag]);
+      document.title = SubdomainTitleMap[this.tag];
+      this.getNewItems();
+    }
 	  };
 	  RoN.getNewItems();
 	});
