@@ -26,4 +26,19 @@ module TagHolder
       self.tags << t unless self.tags.include? t
     end
   end
+
+  module ClassMethods
+    def find_by_tag(tag_name = nil)
+      tag = Tag.find_by_name(tag_name)
+      tagged = []
+      
+      if tag
+        self.all.each do |s|
+          tagged << s if s.tags.include? tag
+        end
+      end
+      
+      tagged
+    end
+  end
 end

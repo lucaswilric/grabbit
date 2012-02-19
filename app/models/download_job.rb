@@ -27,6 +27,7 @@ class DownloadJob < ActiveRecord::Base
   has_and_belongs_to_many :tags
 
   include TagHolder
+  extend TagHolder::ClassMethods
   
   validates_with DownloadJobValidator, :on => :create
   
@@ -44,19 +45,6 @@ class DownloadJob < ActiveRecord::Base
     end
   end
 
-  def self.find_by_tag(tag_name = nil)
-    tag = Tag.find_by_name(tag_name)
-    tagged = []
-    
-    if tag
-      DownloadJob.all.each do |d|
-        tagged << d if d.tags.include? tag
-      end
-    end
-    
-    tagged
-  end
-  
   def extension
     self.subscription.extension if self.subscription
   end

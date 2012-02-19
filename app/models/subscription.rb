@@ -27,18 +27,6 @@ class Subscription < ActiveRecord::Base
   has_and_belongs_to_many :tags
   
   include TagHolder
+  extend TagHolder::ClassMethods
   include ResourceHolder
-  
-  def self.find_by_tag(tag_name = nil)
-    tag = Tag.find_by_name(tag_name)
-    tagged = []
-    
-    if tag
-      Subscription.all.each do |s|
-        tagged << s if s.tags.include? tag
-      end
-    end
-    
-    tagged
-  end
 end
