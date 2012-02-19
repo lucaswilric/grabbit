@@ -62,7 +62,7 @@
 		removeOldItems: function() {},
     startEverything: function() {
       var t = location.href.match(/:\/\/([^\.])+\./)[0];
-		  this.tag = t.substr(3,tag.length-4);
+		  this.tag = t.substr(3,t.length-4);
       $('.page-header h1').text(SubdomainTitleMap[this.tag]);
       document.title = SubdomainTitleMap[this.tag];
       this.getNewItems();
