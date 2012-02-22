@@ -12,28 +12,28 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :title %><br />
+    <%= f.label :title %>
     <%= f.text_field :title %>
   </div>
   <div class="field">
-    <%= f.label :destination %><br />
+    <%= f.label :destination %>
     <%= f.text_field :destination %>
   </div>
   <div class="field">
-    <%= f.label :extension %><br />
+    <%= f.label :extension %>
     <%= f.text_field :extension %>
   </div>
   <div class="field">
-    <%= f.label :url %><br />
+    <%= f.label :url %>
     <%= f.text_field :url %>
   </div>
   <div class="field">
-    <%= f.label :tag_names %><br />
+    <%= f.label :tag_names %>
     <%= f.text_field :tag_names %>
   </div>
-  <div class="field">
+  <div class="field radio">
     <% XMLTag::All.each do |tag| %>
-      <%= radio_button_tag 'subscription[url_element]', tag.value, @subscription.url_element == tag.value %> <label for="subscription_tag_<%= tag.value %>"><%= tag.description %></label><br />
+      <%= radio_button_tag 'subscription[url_element]', tag.value, @subscription.url_element == tag.value %> <label for="subscription_url_element_<%= tag.value %>"><%= tag.description %></label><br />
     <% end %>
   </div>
   <div class="actions">
