@@ -9,29 +9,31 @@ class FeedFetcher
   @logger = Rails.logger
 
   def self.fetch_all_feeds(tag = nil)
-    @logger.debug "#{ Time.zone.now } [DEBUG] Starting FeedFetcher#fetch_all_feeds, tag = #{ tag }"
+    debug "Starting FeedFetcher#fetch_all_feeds, tag = '#{ tag }'"
 
-    Subscription.all.each do |sub|
+    subscriptions = tag ? Subscription.find_by_tag(tag) : Subscription.all
+    subscriptions.each do |sub|
       begin
-        fetch_feed sub
+        fetch_feed sub if sub.resource.updated_at < 5.minutes.ago
       rescue RSS::NotWellFormedError
-        @logger.error "[ERROR] #{ Time.zone.now } RSS XML at #{ sub.url } was not well formed."
+        error "RSS XML at #{ sub.url } was not well formed."
         next
       end
     end
 
+    debug "Done."
   end
 
   # Returns the number of new items created, to make testing easier.
   def self.fetch_feed(sub)
   
-    @logger.warn "Fetching RSS from " + sub.title + " at " + sub.url
+    debug "Fetching RSS from " + sub.title + " at " + sub.url
   
     # Get the feed
     begin
       xml = fetch(sub.resource.url, false).body
     rescue NotFoundError
-      @logger.warn "Did not find '#{sub.resource.url}'. Moving on."
+      warn "Did not find '#{sub.resource.url}'. Moving on."
       return
     end
     
@@ -45,7 +47,7 @@ class FeedFetcher
 
         item_url = get_url item, sub.url_element
         
-        @logger.warn item_url
+#        debug item_url
         
         next unless item_url and (item.date || Time.now) > sub.created_at
 
@@ -60,7 +62,7 @@ class FeedFetcher
         end
       end
     else
-      @logger.warn "Could not parse RSS from " + sub.resource.url
+      warn "Could not parse RSS from " + sub.resource.url
     end
 
     new_item_count
@@ -81,6 +83,30 @@ class FeedFetcher
 
   def self.get_name(item, sub)
     item.title || "#{ sub.name } #{ Time.zone.now.to_s }"
+  end
+  
+  def self.debug(message)
+    if @logger
+      @logger.debug message
+    else
+      print "[DBG] #{ Time.zone.now }: #{message}\n"
+    end
+  end
+
+  def self.warn(message)
+    if @logger
+      @logger.warn message
+    else
+      print "[WRN] #{ Time.zone.now }: #{message}\n"
+    end
+  end
+  
+  def self.error(message)
+    if @logger
+      @logger.error message
+    else
+      print "[ERR] #{ Time.zone.now }: #{message}\n"
+    end
   end
 end
 
