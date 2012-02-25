@@ -1,8 +1,22 @@
+require 'user_holder_controller'
+
 class SubscriptionsController < ApplicationController
+  include UserHolderController
+
   # GET /subscriptions
   # GET /subscriptions.json
+  
+  before_filter :login_required, :except => [:show, :index]
+  before_filter :get_user
+  
+  def login_required
+    redirect_to subscriptions_url unless session[:user_id]
+  end
+  
   def index
-    @subscriptions = Subscription.all
+    user_ids = [nil]
+    user_ids << @user.id if @user
+    @subscriptions = Subscription.where(:user_id => user_ids) 
     
     @subscriptions = Subscription.find_by_tag(params[:tag_name]) if params[:tag_name]
 
@@ -16,6 +30,8 @@ class SubscriptionsController < ApplicationController
   # GET /subscriptions/1.json
   def show
     @subscription = Subscription.find(params[:id])
+    
+    redirect_to subscriptions_url, :notice => "Sorry. You can't see that one." unless @user == @subscription.user or @subscription.user == nil
 
     respond_to do |format|
       format.html # show.html.erb
@@ -25,7 +41,7 @@ class SubscriptionsController < ApplicationController
 
   # GET /subscriptions/new
   # GET /subscriptions/new.json
-  def new
+  def new  
     @subscription = Subscription.new
 
     respond_to do |format|
@@ -59,7 +75,7 @@ class SubscriptionsController < ApplicationController
   # PUT /subscriptions/1.json
   def update
     @subscription = Subscription.find(params[:id])
-
+    
     respond_to do |format|
       if @subscription.update_attributes(params[:subscription])
         format.html { redirect_to @subscription, :notice => 'Subscription was successfully updated.' }

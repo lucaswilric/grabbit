@@ -5,3 +5,6 @@
 #
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Emanuel', :city => cities.first)
+
+User.create({:name => 'Lucas Wilson-Richter', :open_id => 'http://openid.lucasrichter.id.au/'}) unless User.find_by_open_id 'http://openid.lucasrichter.id.au/'
+

@@ -1,4 +1,5 @@
 Grabbit3::Application.routes.draw do
+
   resources :download_jobs do
     post 'search', :on => :collection
   end
@@ -13,6 +14,12 @@ Grabbit3::Application.routes.draw do
   match 'subscriptions/tagged/:tag_name/' => 'subscriptions#index'
   
   match 'download_jobs/tagged/:tag_name/feed' => 'download_jobs#feed'
+
+  # OmniAuth login routes
+  get   '/login', :to => 'sessions#new', :as => :login
+  match '/auth/:provider/callback', :to => 'sessions#create'
+  match '/auth/failure', :to => 'sessions#failure'
+  get   '/logout', :to => 'sessions#destroy'
   
   get "home/index"
 

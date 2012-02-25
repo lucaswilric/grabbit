@@ -23,6 +23,7 @@ end
 
 class Subscription < ActiveRecord::Base
   belongs_to :resource
+  belongs_to :user
   has_many :download_jobs
   has_and_belongs_to_many :tags
   

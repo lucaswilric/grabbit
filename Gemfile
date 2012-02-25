@@ -37,3 +37,6 @@ gem 'thin'
 group :development, :test do
   gem 'rspec-rails'
 end
+
+# OmniAuth for OpenID authentication
+gem 'omniauth-openid', :git => 'git://github.com/intridea/omniauth-openid.git'

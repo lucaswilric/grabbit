@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120103005706) do
+ActiveRecord::Schema.define(:version => 20120225014655) do
 
   create_table "download_jobs", :force => true do |t|
     t.string   "title"
@@ -20,6 +21,7 @@ ActiveRecord::Schema.define(:version => 20120103005706) do
     t.string   "directory"
     t.string   "url"
     t.integer  "subscription_id"
+    t.integer  "user_id"
   end
 
   create_table "download_jobs_tags", :id => false, :force => true do |t|
@@ -42,6 +44,7 @@ ActiveRecord::Schema.define(:version => 20120103005706) do
     t.datetime "updated_at"
     t.string   "url_element"
     t.string   "extension"
+    t.integer  "user_id"
   end
 
   add_index "subscriptions", ["resource_id"], :name => "index_subscriptions_on_resource_id"
@@ -53,6 +56,13 @@ ActiveRecord::Schema.define(:version => 20120103005706) do
 
   create_table "tags", :force => true do |t|
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "users", :force => true do |t|
+    t.string   "name"
+    t.string   "open_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

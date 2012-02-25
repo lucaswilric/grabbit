@@ -1,7 +1,7 @@
 <%= form_for(@download_job) do |f| %>
   <% if @download_job.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@download_job.errors.count, "error") %> prohibited this download_job from being saved:</h2>
+      <h2><%= pluralize(@download_job.errors.count, "error") %> prohibited this item from being saved:</h2>
 
       <ul>
       <% @download_job.errors.full_messages.each do |msg| %>
@@ -30,6 +30,13 @@
   <div class="field">
     <%= f.label :status %>
     <%= f.select :status, Status.values %>
+  </div>
+  <div class="field radio">
+    <%= radio_button_tag 'download_job[user_id]', @user.id, @download_job.user == @user %>
+    <label for="download_job_user_id_<%= @user.id %>">Only I can see this item</label>
+    <br />
+    <%= radio_button_tag 'download_job[user_id]', '', @download_job.user != @user %>
+    <label for="download_job_user_id_">Anyone can see this item</label>
   </div>
   <div class="actions">
     <%= f.submit %>

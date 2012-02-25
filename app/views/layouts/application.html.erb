@@ -7,6 +7,13 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+<div id="user_greeting">
+<% if @user %>
+You are logged in as <strong><%= @user.name || @user.open_id %></strong>. <a href="/logout">Log out</a>.
+<% else %>
+You are not logged in. <a href="/auth/open_id/">Log in now</a>.
+<% end %>
+</div>
 
 <%= yield %>
 

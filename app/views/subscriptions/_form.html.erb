@@ -36,6 +36,13 @@
       <%= radio_button_tag 'subscription[url_element]', tag.value, @subscription.url_element == tag.value %> <label for="subscription_url_element_<%= tag.value %>"><%= tag.description %></label><br />
     <% end %>
   </div>
+  <div class="field radio">
+    <%= radio_button_tag 'subscription[user_id]', @user.id, @subscription.user == @user %>
+    <label for="subscription_user_id_<%= @user.id %>">Only I can see this subscription</label>
+    <br />
+    <%= radio_button_tag 'subscription[user_id]', '', @subscription.user != @user %>
+    <label for="subscription_user_id_">Anyone can see this subscription</label>
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>

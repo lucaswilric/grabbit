@@ -1,11 +1,19 @@
 require 'feed_fetcher'
+require 'user_holder_controller'
 require 'net/http'
 
 class DownloadJobsController < ApplicationController
+  include UserHolderController
 
   protect_from_forgery :only => [ :delete ]
 
   before_filter :default_format_json, :only => :feed
+  before_filter :login_required, :except => [:index, :show, :feed, :search]
+  before_filter :get_user
+  
+  def login_required
+    redirect_to download_jobs_url unless session[:user_id]
+  end
 
   def default_format_json
     request.format = "json" unless params[:format]
@@ -19,6 +27,8 @@ class DownloadJobsController < ApplicationController
     else
       @download_jobs = DownloadJob.all
     end
+    
+    @download_jobs.reject! {|d| d.user and d.user != @user}
     
     @download_jobs.sort! {|a,b| b.created_at <=> a.created_at }
 
@@ -35,7 +45,7 @@ class DownloadJobsController < ApplicationController
 
     @download_jobs = DownloadJob.find_by_tag(@tag_name)
     
-    @download_jobs.reject! {|d| not [Status[:not_started], Status[:retry]].include? d.status }
+    @download_jobs.reject! {|d| (not [Status[:not_started], Status[:retry]].include? d.status) or (d.user and d.user != @user) }
     @download_jobs.sort! {|a,b| b.created_at <=> a.created_at }
     @download_jobs = @download_jobs.first(30)
     
@@ -52,6 +62,8 @@ class DownloadJobsController < ApplicationController
   # GET /download_jobs/1.json
   def show
     @download_job = DownloadJob.find(params[:id])
+    
+    redirect_to download_jobs_url, :notice => "Sorry, you can't see that one." if @download_job.user and @download_job.user != @user
 
     respond_to do |format|
       format.html # show.html.erb
@@ -120,7 +132,9 @@ class DownloadJobsController < ApplicationController
   end
   
   def search
-    @download_jobs = DownloadJob.where(:url => params[:url]).order('download_jobs.id desc').limit(10)
+    user_ids = [nil]
+    user_ids << @user.id if @user
+    @download_jobs = DownloadJob.where(:url => params[:url], :user_id => user_ids).order('download_jobs.id desc').limit(10)
     
     render :json => @download_jobs
   end
