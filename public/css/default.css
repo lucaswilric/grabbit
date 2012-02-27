@@ -1,8 +1,12 @@
-h1 {
-  float: left;
-}
 
 #rss-icon {
-  margin: 14px 0 0 10px;
-  float: left;
+/*  margin: 12px 0 0 10px; 
+  float: right;*/
 }
+
+#grid-system { margin-left: 100px; }
+
+.item { margin-bottom: 8px; }
+
+.icon-chevron-right { margin: 3px 3px 0 0; }
+
