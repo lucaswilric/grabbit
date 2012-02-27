@@ -14,6 +14,9 @@
 			<p>This page is styled after <a href="http://scripting.com/">Dave Winer</a>'s <a href="http://daveriver.scripting.com/">River of News</a>. It's built with <a href="http://jquery.com">jQuery</a> and <a href="http://twitter.github.com/bootstrap/">Bootstrap</a>, and gets its data from <a href="http://grabbit.lucasrichter.id.au/">Grabbit</a>.</p>
 		</div>
 	</section>
+	<div id="itemTemplate" class="item row">
+	  <h3 class="span10 offset1"><span class="icon-chevron-right"></span><a href="#"></a></h3>
+	</div>
 	<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
 	<script type="text/javascript">
 	var RoN = {};
@@ -31,26 +34,25 @@
 		addItems: function(items) {
 		  $.each(items.reverse(), function() {
 		    if ($('#ronItem_' + this.id).length) return;
-			jQuery('<div/>', {
-			    class: 'item row',
-				id: 'ronItem_' + this.id
-			  }).append(jQuery('<h3/>', {
-				class: 'span10 offset1'
-			  }).append(jQuery('<span/>', {
-				class: 'icon-chevron-right'
-			  })).append(jQuery('<a/>', {
-				href: this.url,
-				text: this.title,
-				title: this.title,
-				target: '_blank'
-			  }))
-			).prependTo('#news');
+		    
+		    newItem = $('#itemTemplate').clone().attr('id', 'ronItem_'+this.id);
+		    
+		    RoN.fillTemplate(newItem, this);
+			  
+			  newItem.prependTo('#news');
 		  });
+		},
+		fillTemplate: function(item, data) {
+			  item.find('a'
+			    ).attr('href', data.url
+			    ).attr('title', data.title
+			    ).attr('target', '_blank'
+			    ).text(data.title);
 		},
 		getNewItems: function() {
 		  console.log('Getting new items...');
 		  $.ajax({
-			url: this.sourceURL.replace('{TAG}', this.tag),
+			url: RoN.sourceURL.replace('{TAG}', RoN.tag),
 			success: this.addItems,
 			dataType: 'json'
 		  });
