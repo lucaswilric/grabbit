@@ -1,0 +1,23 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @client.name %>
+</p>
+
+<p>
+  <b>Redirect URL:</b>
+  <%= @client.redirect_uri %>
+</p>
+
+<p>
+  <b>App ID:</b>
+  <%= @client.client_id %>
+</p>
+
+<p>
+  <b>App Secret:</b>
+  <%= @client.client_secret %>
+</p>
+
+<%= link_to 'Back', subscriptions_path %>

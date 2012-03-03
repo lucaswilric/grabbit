@@ -47,3 +47,7 @@ module Grabbit3
     config.assets.version = '1.0'
   end
 end
+
+OAuth2::Provider.realm = 'Grabbit'
+OAuth2::Provider.enforce_ssl = true
+

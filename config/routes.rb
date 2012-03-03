@@ -21,6 +21,10 @@ Grabbit3::Application.routes.draw do
   match '/auth/failure', :to => 'sessions#failure'
   get   '/logout', :to => 'sessions#destroy'
   
+  # OAuth authorisation routes
+  resources :oauth_apps
+  match '/oauth/authorize', :to => 'oauth_apps#authorize'
+
   get "home/index"
 
   # The priority is based upon order of creation:
