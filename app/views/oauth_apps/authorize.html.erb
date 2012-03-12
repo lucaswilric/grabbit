@@ -1,0 +1,13 @@
+<p id="notice"><%= notice %></p>
+
+<%= form_for(@client, :url => { :action => 'allow' }) do |f| %>
+	<% @oauth2.params.each do |key, value| %>
+		<input type="hidden" name="<%= key %>" value="<%= value %>">
+	<% end %>
+	
+	<p>The application <strong><%= @oauth2.client.name %></strong> wants to access Grabbit on your behalf.</p>
+	
+	<%= f.submit 'Authorise' %>
+<% end %>
+
+<%= link_to 'Back to subscriptions', subscriptions_path %>

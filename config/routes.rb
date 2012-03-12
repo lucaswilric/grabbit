@@ -23,7 +23,9 @@ Grabbit3::Application.routes.draw do
   
   # OAuth authorisation routes
   resources :oauth_apps
+  resources :o_auth2_model_clients, :controller => 'oauth_apps'
   match '/oauth/authorize', :to => 'oauth_apps#authorize'
+  match '/oauth/allow', :to => 'oauth_apps#allow'
 
   get "home/index"
 

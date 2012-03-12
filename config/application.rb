@@ -49,5 +49,5 @@ module Grabbit3
 end
 
 OAuth2::Provider.realm = 'Grabbit'
-OAuth2::Provider.enforce_ssl = true
+#OAuth2::Provider.enforce_ssl = true
 
