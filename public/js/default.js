@@ -76,7 +76,7 @@
 		  this.tag = t.substr(3,t.length-4);
       $('.page-header h1').text(SubdomainSettingsMap[this.tag].title);
       $('#rss-icon').attr('href', 'download_jobs/tagged/'+this.tag+'/feed.rss');
-      document.title = SubdomainSettingsMap[this.tag];
+      document.title = SubdomainSettingsMap[this.tag].title;
       this.getSubscriptions();
       this.getNewItems();
     }
