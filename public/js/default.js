@@ -14,11 +14,7 @@
 		addItems: function(items) {
 		  $.each(items.reverse(), function() {
 		    if ($('#ronItem_' + this.id).length) return;
-				
-		    newItem = $('#itemTemplate').clone().attr('id', 'ronItem_'+this.id);
-		    RoN.fillTemplate(newItem, this);
-			  newItem.prependTo('#news');
-		    
+						    
 		    var d = new Date(this.created_at);
 		    var newDateHeading = d.getDate() + ' ' + RoN.months[d.getMonth()];
 		    
@@ -26,6 +22,10 @@
 		    	RoN.insertDateHeader();
 					RoN.dateHeading = newDateHeading;
 				}
+				
+		    newItem = $('#itemTemplate').clone().attr('id', 'ronItem_'+this.id);
+		    RoN.fillTemplate(newItem, this);
+			  newItem.prependTo('#news');
 			});
 			RoN.insertDateHeader();
 		},
