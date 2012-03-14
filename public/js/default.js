@@ -1,8 +1,8 @@
 	$(function(){
-    SubdomainTitleMap = {
-      'reading': "Lucas's Reading List",
-      'links': "Lucas's Linkblog",
-      'grabbit': "Grabbit"
+    SubdomainSettingsMap = {
+      'reading': {title: "Lucas's Reading List", showSubscription: true},
+      'links': {title: "Lucas's Linkblog", showSubscription: false},
+      'grabbit': {title: "Grabbit", showSubscription: true}
     };
 	  window.RoN = {
 	  months: ['January','February','March','April','May','June','July','August','September','October','November','December'],
@@ -45,8 +45,12 @@
 			  var domain = data.url.match(/:\/\/([^\/]+)/)[1];
 			  item.find('img'
 			  	).attr('src', 'http://www.google.com/s2/favicons?domain='+domain);
-			  item.find('.link-attribution em'
-			  	).text(RoN.subscriptions[data.subscription_id].title); 
+
+			  if (SubdomainSettingsMap[RoN.tag].showSubscription)
+					item.find('.link-attribution em'
+						).text(RoN.subscriptions[data.subscription_id].title); 
+				else
+					item.find('.link-attribution').remove();
 		},
 		getNewItems: function() {
 		  console.log('Getting new items...');
@@ -70,9 +74,9 @@
     startEverything: function() {
       var t = location.href.match(/:\/\/([^\.])+[\.\/]/)[0];
 		  this.tag = t.substr(3,t.length-4);
-      $('.page-header h1').text(SubdomainTitleMap[this.tag]);
+      $('.page-header h1').text(SubdomainSettingsMap[this.tag].title);
       $('#rss-icon').attr('href', 'download_jobs/tagged/'+this.tag+'/feed.rss');
-      document.title = SubdomainTitleMap[this.tag];
+      document.title = SubdomainSettingsMap[this.tag];
       this.getSubscriptions();
       this.getNewItems();
     }
