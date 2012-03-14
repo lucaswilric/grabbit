@@ -15,62 +15,10 @@
 		</div>
 	</section>
 	<div id="itemTemplate" class="item row">
-	  <h3 class="span10 offset1"><span class="icon-chevron-right"></span><a href="#"></a></h3>
+	  <div class="span10 offset1"><h3><img src="" /><span class="icon-chevron-right"></span><a href="#"></a></h3><span class="link-attribution">from <em></em></span></div>
 	</div>
+	<div id="dateHeaderTemplate" class="day-header offset1"><h2></h2></div>
 	<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
-	<script type="text/javascript">
-	var RoN = {};
-	$(function(){
-    SubdomainTitleMap = {
-      'reading': "Lucas's Reading List",
-      'links': "Lucas's Linkblog",
-      'localhost:3000': "Title goes here",
-      'grabbit': "Grabbit"
-    };
-	  RoN = {
-	  tag: '',
-		sourceURL: '/download_jobs/tagged/{TAG}/feed',
-		maxItemsToDisplay: 100,
-		addItems: function(items) {
-		  $.each(items.reverse(), function() {
-		    if ($('#ronItem_' + this.id).length) return;
-		    
-		    newItem = $('#itemTemplate').clone().attr('id', 'ronItem_'+this.id);
-		    
-		    RoN.fillTemplate(newItem, this);
-			  
-			  newItem.prependTo('#news');
-		  });
-		},
-		fillTemplate: function(item, data) {
-			  item.find('a'
-			    ).attr('href', data.url
-			    ).attr('title', data.title
-			    ).attr('target', '_blank'
-			    ).text(data.title);
-		},
-		getNewItems: function() {
-		  console.log('Getting new items...');
-		  $.ajax({
-			url: RoN.sourceURL.replace('{TAG}', RoN.tag),
-			success: this.addItems,
-			dataType: 'json'
-		  });
-		  console.log('Done getting new items.');
-		},
-		removeOldItems: function() {},
-    startEverything: function() {
-      var t = location.href.match(/:\/\/([^\.])+[\.\/]/)[0];
-		  this.tag = t.substr(3,t.length-4);
-      $('.page-header h1').text(SubdomainTitleMap[this.tag]);
-      $('#rss-icon').attr('href', 'download_jobs/tagged/'+this.tag+'/feed.rss');
-      document.title = SubdomainTitleMap[this.tag];
-      this.getNewItems();
-		  window.setInterval(RoN.getNewItems, 300000);
-    }
-	  };
-	  RoN.startEverything();
-	});
- </script>
+	<script type="text/javascript" src="js/default.js"></script>
 </body>
 </html>
