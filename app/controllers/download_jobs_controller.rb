@@ -41,7 +41,6 @@ class DownloadJobsController < ApplicationController
   # There should always be only one tag in params[].
   def feed
     @tag_name = params[:tag_name]
-    FeedFetcher.fetch_all_feeds @tag_name
 
     @download_jobs = DownloadJob.find_by_tag(@tag_name)
     
