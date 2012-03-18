@@ -11,8 +11,21 @@
 		sourceURL: '/download_jobs/tagged/{TAG}/feed',
 		maxItemsToDisplay: 100,
 		subscriptions: [],
+		displayMessage: function(message) {
+			var mt = $('#message-template').clone(
+				).attr('id', 'ron-message_' + $('#news .ron-message').length);
+			mt.find('h2').text(message);
+			mt.prependTo('#news');
+		},
 		addItems: function(items) {
-		  $.each(items.reverse(), function() {
+			$('#waiting').remove();
+			
+			if (items.length == 0) {
+				RoN.displayMessage("No items to display.");
+				return;
+			}
+			
+			$.each(items.reverse(), function() {
 		    if ($('#ronItem_' + this.id).length) return;
 						    
 		    var d = new Date(this.created_at);
@@ -23,7 +36,7 @@
 					RoN.dateHeading = newDateHeading;
 				}
 				
-		    newItem = $('#itemTemplate').clone().attr('id', 'ronItem_'+this.id);
+		    newItem = $('#item-template').clone().attr('id', 'ronItem_'+this.id);
 		    RoN.fillTemplate(newItem, this);
 			  newItem.prependTo('#news');
 			});
@@ -32,7 +45,7 @@
 		insertDateHeader: function() {
 			if (RoN.dateHeading == '') return;
 		
-			var header = $('#dateHeaderTemplate').clone().attr('id', null);
+			var header = $('#date-header-template').clone().attr('id', null);
 			header.find('h2').text(RoN.dateHeading);
 			header.prependTo('#news');		
 		},
@@ -57,6 +70,7 @@
 		  $.ajax({
 			url: RoN.sourceURL.replace('{TAG}', RoN.tag),
 			success: this.addItems,
+			failure: function() { this.displayMessage('There was a problem getting the links.'); },
 			dataType: 'json'
 		  });
 		  console.log('Done getting new items.');

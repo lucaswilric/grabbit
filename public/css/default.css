@@ -5,7 +5,7 @@
 
 .icon-chevron-right { margin: 3px 3px 0 0; }
 
-#itemTemplate, #dateHeaderTemplate { display: none; }
+#templates { display: none; }
 
 .link-attribution { 
 	float: left; 
@@ -15,3 +15,4 @@
 h3 { float: left; }
 
 .day-header h2 { color: #aaf; }
+
