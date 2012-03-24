@@ -42,11 +42,7 @@ class DownloadJobsController < ApplicationController
   def feed
     @tag_name = params[:tag_name]
 
-    @download_jobs = DownloadJob.find_by_tag(@tag_name)
-    
-    @download_jobs.reject! {|d| (not [Status[:not_started], Status[:retry]].include? d.status) or (d.user and d.user != @user) }
-    @download_jobs.sort! {|a,b| b.created_at <=> a.created_at }
-    @download_jobs = @download_jobs.first(30)
+    @download_jobs = Tag.find_by_name(@tag_name).download_jobs_for_feed(30, @user)
     
     @feed_updated_at = @download_jobs.first.updated_at || @download_jobs.first.created_at unless @download_jobs.empty?
     @feed_updated_at = Time.now unless @feed_updated_at
