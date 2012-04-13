@@ -77,6 +77,9 @@ class FeedFetcher
       item_url = item.enclosure.url
     end
 
+    # Compensate for bug in Al Jazeera English RSS feed, where they (seem to) post every time with a double slash in the URL, then correct it later.
+    item_url = item_url.gsub(/\/{2,}/, '/').sub(/:\//, '://')
+
     # Return nil instead of an empty string
     item_url.blank? ? nil : item_url
   end
