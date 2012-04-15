@@ -23,7 +23,7 @@ class DownloadJobsController < ApplicationController
   # GET /download_jobs.json
   def index
     if params[:tag_name]
-      @download_jobs = DownloadJob.find_by_tag(params[:tag_name]) 
+      @download_jobs = Tag.find_by_name(params[:tag_name]).download_jobs_for_feed(100, @user) 
     else
       @download_jobs = DownloadJob.all
     end
