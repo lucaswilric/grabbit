@@ -18,6 +18,9 @@ class FeedFetcher
       rescue RSS::NotWellFormedError
         error "RSS XML at #{ sub.url } was not well formed."
         next
+      rescue
+        error $!.to_s
+        next
       end
     end
 
