@@ -50,9 +50,11 @@ class FeedFetcher
 
         item_url = get_url item, sub.url_element
         
-        debug item_url
+        #debug item_url
         
-        next unless item_url and (item.date || Time.now) > sub.created_at
+        published = item.date if item.is_a? RSS::Rss::Channel::Item
+        published = item.published if item.is_a? RSS::Atom::Feed::Entry
+        next unless item_url and (published || Time.now) > sub.created_at
 
         unless DownloadJob.find_by_url(item_url)
           begin
