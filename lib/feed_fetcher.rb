@@ -72,13 +72,14 @@ class FeedFetcher
     item_url = nil
 
     if tag == 'link'
-      item_url = item.link
+      item_url = item.link.href if item.is_a? RSS::Atom::Feed::Entry
+      item_url = item.link if item.is_a? RSS::Rss::Channel::Item
     elsif tag == 'enclosure' and item.enclosure
       item_url = item.enclosure.url
     end
 
     # Compensate for bug in Al Jazeera English RSS feed, where they (seem to) post every time with a double slash in the URL, then correct it later.
-    item_url = item_url.gsub(/\/{2,}/, '/').sub(/:\//, '://')
+    item_url = item_url.to_s.gsub(/\/{2,}/, '/').sub(/:\//, '://')
 
     # Return nil instead of an empty string
     item_url.blank? ? nil : item_url
