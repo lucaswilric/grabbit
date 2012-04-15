@@ -50,7 +50,7 @@ class FeedFetcher
 
         item_url = get_url item, sub.url_element
         
-#        debug item_url
+        debug item_url
         
         next unless item_url and (item.date || Time.now) > sub.created_at
 
