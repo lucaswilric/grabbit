@@ -11,9 +11,12 @@ module HttpFetcher
     
     Rails.logger.debug "Fetching " + uri.to_s
        
-    response = Net::HTTP.start(uri.host, uri.port) do |http|
+    http_opts = (uri.scheme == 'https' ? {:use_ssl => true, :verify_mode => OpenSSL::SSL::VERIFY_NONE} : {})
+    
+    response = Net::HTTP.start(uri.host, uri.port, http_opts) do |http|
       path_and_query = uri.path == nil ? '' : uri.path
       path_and_query += uri.query == nil ? '' : '?' + uri.query
+      
       http.get path_and_query, { 'Cache-Control' => 'no-cache' }
     end
     
