@@ -15,8 +15,9 @@ class DownloadJobValidator < ActiveModel::Validator
   end
   
   def pending_download_exists(record)
-    job_count = DownloadJob.where(:url => record.url, :status => [Status[:not_started], Status[:in_progress], Status[:retry]]).length
-    job_count += DownloadJob.where(["url = ? and status = ? and updated_at > ?", record.url, Status[:finished], 1.month.ago]).length
+    jobs = DownloadJob.where(:url => record.url, :subscription_id => record.subscription ? record.subscription.id : nil)
+    job_count = jobs.where(:url => record.url, :status => [Status[:not_started], Status[:in_progress], Status[:retry]]).length
+    job_count += jobs.where(["url = ? and status = ? and updated_at > ?", record.url, Status[:finished], 1.month.ago]).length
     
     job_count > 0
   end
