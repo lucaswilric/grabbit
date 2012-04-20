@@ -23,14 +23,12 @@ class DownloadJobsController < ApplicationController
   # GET /download_jobs.json
   def index
     if params[:tag_name]
-      @download_jobs = Tag.find_by_name(params[:tag_name]).download_jobs_for_feed(100, @user) 
+      @download_jobs = Tag.find_by_name(params[:tag_name]).download_jobs.order('download_jobs.id desc').limit(100)
     else
-      @download_jobs = DownloadJob.all
+      @download_jobs = DownloadJob.all.order('download_jobs.id desc').limit(100)
     end
     
     @download_jobs.reject! {|d| d.user and d.user != @user}
-    
-    @download_jobs.sort! {|a,b| b.created_at <=> a.created_at }
 
     respond_to do |format|
       format.html # index.html.erb
