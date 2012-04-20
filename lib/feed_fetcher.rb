@@ -53,7 +53,7 @@ class FeedFetcher
         published = item.date if item.is_a? RSS::Rss::Channel::Item
         published = item.published.content if item.is_a? RSS::Atom::Feed::Entry
 
-        #debug "#{item_url} | #{published.inspect} | #{published.to_s}"
+        debug "#{item_url} | #{sub.created_at} | #{published.to_s}"
         
         next unless item_url and (published || Time.now) > sub.created_at
 
@@ -62,6 +62,8 @@ class FeedFetcher
           if (dl.id?)
             debug dl.id.to_s
             new_item_count += 1
+          else
+            warn dl.errors.messages.to_s
           end
         rescue
           error "Problem saving '#{item_url}'. Does it already exist for this subscription?"
@@ -92,6 +94,8 @@ class FeedFetcher
 
     # Some numpties put links in their feeds without a scheme.
     item_url = "http://#{item_url}" unless item_url.include?('://')
+    
+    item_url
   end
 
   def self.get_name(item, sub)
