@@ -25,7 +25,7 @@ class DownloadJobsController < ApplicationController
     if params[:tag_name]
       @download_jobs = Tag.find_by_name(params[:tag_name]).download_jobs.order('download_jobs.id desc').limit(100)
     else
-      @download_jobs = DownloadJob.all.order('download_jobs.id desc').limit(100)
+      @download_jobs = DownloadJob.order('download_jobs.id desc').limit(100)
     end
     
     @download_jobs.reject! {|d| d.user and d.user != @user}
