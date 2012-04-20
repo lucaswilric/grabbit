@@ -24,6 +24,8 @@ class DownloadJobsController < ApplicationController
   def index
     if params[:tag_name]
       @download_jobs = Tag.find_by_name(params[:tag_name]).download_jobs.order('download_jobs.id desc').limit(100)
+    elsif params[:subscription_id]
+      @download_jobs = Subscription.find(params[:subscription_id]).download_jobs.order('download_jobs.id desc').limit(100)
     else
       @download_jobs = DownloadJob.order('download_jobs.id desc').limit(100)
     end
