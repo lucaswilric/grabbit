@@ -57,7 +57,9 @@ class FeedFetcher
         
         next unless item_url and (published || Time.now) > sub.created_at
 
-        unless DownloadJob.find_by_url(item_url)
+        existing_jobs = DownloadJob.where(:url => item_url, :subscription_id => sub.id)
+
+        unless existing_jobs.length > 0
           begin
             dl = DownloadJob.create :subscription => sub, :title => get_name(item,sub), :url => item_url
             debug dl.id.to_s
