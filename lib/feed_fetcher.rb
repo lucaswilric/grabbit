@@ -53,21 +53,17 @@ class FeedFetcher
         published = item.date if item.is_a? RSS::Rss::Channel::Item
         published = item.published.content if item.is_a? RSS::Atom::Feed::Entry
 
-        debug "#{item_url} | #{published.inspect} | #{published.to_s}"
+        #debug "#{item_url} | #{published.inspect} | #{published.to_s}"
         
         next unless item_url and (published || Time.now) > sub.created_at
 
-        existing_jobs = DownloadJob.where(:url => item_url, :subscription_id => sub.id)
-
-        unless existing_jobs.length > 0
-          begin
-            dl = DownloadJob.create :subscription => sub, :title => get_name(item,sub), :url => item_url
+        begin
+          if (dl = DownloadJob.create(:subscription => sub, :title => get_name(item,sub), :url => item_url))
             debug dl.id.to_s
-          rescue => ex
-            raise
+            new_item_count += 1
           end
-
-          new_item_count += 1
+        rescue
+          error "Problem saving '#{item_url}'. Does it already exist for this subscription?"
         end
       end
     else
