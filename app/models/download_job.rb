@@ -18,7 +18,7 @@ class DownloadJobValidator < ActiveModel::Validator
     jobs = DownloadJob.where(:url =>  record.url, :subscription_id => (record.subscription ? record.subscription.id : nil))
     
     job_count = jobs.where(:status => [Status[:not_started], Status[:in_progress], Status[:retry]]).length
-    job_count += jobs.where(["status = ? and updated_at > ?", Status[:finished], 1.month.ago]).length
+    job_count += jobs.where(["status = ? and updated_at > ?", Status[:finished], 6.months.ago]).length
     
     job_count > 0
   end
