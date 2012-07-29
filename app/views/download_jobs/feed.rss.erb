@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <rss version="2.0">
 	<channel>
-		<title>Grabbit feed for &quot;<%= @tag_name %>&quot;</title>
+		<title><%= @feed_title %></title>
 		<link><%= root_url.chomp('/') + download_jobs_path %>/tagged/<%= @tag_name %>/feed.rss</link>
 		<description>A list of items tagged "<%= @tag_name %>", from the Grabbit RSS feed combiner.</description>
 		<language>en-us</language>

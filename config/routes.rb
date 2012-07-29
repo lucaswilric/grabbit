@@ -10,6 +10,8 @@ Grabbit3::Application.routes.draw do
   
   resources :resources
   
+  resources :tags
+  
   match 'download_jobs/tagged/:tag_name/' => 'download_jobs#index'
   match 'subscriptions/tagged/:tag_name/' => 'subscriptions#index'
   
