@@ -1,8 +1,7 @@
 class TagsController < ApplicationController
   def show
-    @tag = Tag.find params[:id]
-    @tag = Tag.find_by_name params[:id] unless @tag
-
+    find_tag params[:id]
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render :json => @tag }
@@ -10,7 +9,7 @@ class TagsController < ApplicationController
   end
   
   def edit
-    @tag = Tag.find_by_name params[:id]
+    find_tag params[:id]
   end
   
   def update
@@ -25,5 +24,12 @@ class TagsController < ApplicationController
         format.json { render :json => @tag.errors, :status => :unprocessable_entity }
       end
     end
+  end
+  
+  private
+  
+  def find_tag(id)
+    @tag = Tag.find id if id.to_i > 0
+    @tag = Tag.find_by_name id unless @tag
   end
 end
