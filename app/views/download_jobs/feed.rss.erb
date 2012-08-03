@@ -17,6 +17,7 @@
 			<% dj.tags.each do |tag| %>
 			<category><%= tag.name %></category>
 			<% end %>
+			<source url="<%= dj.subscription.url %>"><%= dj.subscription.title %></source>
 	  </item>
     <% end %>
   </channel>
