@@ -1,4 +1,15 @@
-<h1>Subscriptions</h1>
+<%
+  title = "Subscriptions"
+  
+  if @tag
+    if @tag.title
+      title += " for <em>#{@tag.title}</em>"
+    else
+      title += " tagged <em>#{@tag.name}</em>"
+    end
+  end
+%>
+<h1><%= title.html_safe %></h1>
 <hr/>
 <p id="notice"><%= notice %></p>
 

@@ -18,7 +18,10 @@ class SubscriptionsController < ApplicationController
     user_ids << @user.id if @user
     @subscriptions = Subscription.where(:user_id => user_ids) 
     
-    @subscriptions = Subscription.find_by_tag(params[:tag_name]) if params[:tag_name]
+    if params[:tag_name]
+      @tag = Tag.find_by_name params[:tag_name]
+      @subscriptions = Subscription.find_by_tag(@tag.name)
+    end
 
     respond_to do |format|
       format.html # index.html.erb
