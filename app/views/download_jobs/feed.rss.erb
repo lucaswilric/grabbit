@@ -17,7 +17,7 @@
 			<% dj.tags.each do |tag| %>
 			<category><%= tag.name %></category>
 			<% end %>
-			<% if dj.subscription %>
+			<% if @tag.show_source && dj.subscription %>
 			<source url="<%= dj.subscription.url %>"><%= dj.subscription.title %></source>
 			<% end %>
 	  </item>

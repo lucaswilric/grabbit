@@ -60,10 +60,14 @@ div {
 }
 .row {
     border: 1px solid transparent;
+    padding: 2px 0;
 
     &:hover {
         background: #fbfbfb;
         border: 1px solid #ddd;
         border-radius: 9px;
     }
+}
+.field.checkbox label {
+    display: inline;
 }

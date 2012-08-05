@@ -19,6 +19,10 @@
     <%= f.label :name %>
     <%= f.text_field :name %>
   </div>
+  <div class="field checkbox">
+    <%= f.check_box :show_source %>
+    <%= f.label :show_source, "Expose RSS sources for this tag (affects RSS feeds)." %>
+  </div>
   <div class="actions">
     <%= f.submit "Update tag", :class => 'btn btn-primary' %>
   </div>

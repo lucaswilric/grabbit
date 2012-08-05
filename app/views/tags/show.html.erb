@@ -1,13 +1,14 @@
 <p id="notice"><%= notice %></p>
 
+<h1>Tag: <em><%= @tag.name %></em></h1>
+<hr />
 <p>
-  <b>Name:</b>
-  <%= @tag.name %>
+  Feed title:
+  <strong><%= @tag.title %></strong>
 </p>
 
 <p>
-  <b>Title:</b>
-  <%= @tag.title %>
+    Source subscription info <strong><%= @tag.show_source? ? "is" : "is not" %></strong> exposed in this tag's feed.
 </p>
 
 <%= link_to 'Edit', edit_tag_path(@tag) %> |

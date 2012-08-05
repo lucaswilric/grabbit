@@ -1,0 +1,18 @@
+<h1>Tags</h1>
+<hr/>
+<p id="notice"><%= notice %></p>
+
+<p><%= link_to 'New tag', new_tag_path, :class => 'btn' %></p>
+
+<% @tags.each do |tag| %>
+  <div class="tag row">
+      <span class="span2">
+        <a href="/download_jobs/tagged/<%= tag.name %>/feed.rss" title="RSS feed" class="rss"><span class="name"><%= tag.name %></span></a>
+        
+      </span>
+      <span class="span4 title"><%= tag.title %>&nbsp;</span>
+      <span class="span1"><%= link_to 'Edit', edit_tag_path(tag), :class => 'btn btn-primary btn-mini' %></span>
+      <span class="span2"><%= link_to 'Destroy', { :id => tag, :confirm => 'Are you sure?', :method => :delete }, :class => 'btn btn-mini' %></span>
+  </div>
+<% end %>
+

@@ -1,4 +1,8 @@
 class TagsController < ApplicationController
+  def index
+    @tags = Tag.all
+  end
+  
   def show
     find_tag params[:id]
     

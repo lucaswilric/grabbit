@@ -42,14 +42,14 @@ class DownloadJobsController < ApplicationController
   # There should always be only one tag in params[].
   def feed
     @tag_name = params[:tag_name]
-    tag = Tag.find_by_name(@tag_name)
+    @tag = Tag.find_by_name(@tag_name)
 
-    @download_jobs = tag.download_jobs_for_feed(30, @user)
+    @download_jobs = @tag.download_jobs_for_feed(30, @user)
     
     @feed_updated_at = @download_jobs.first.updated_at || @download_jobs.first.created_at unless @download_jobs.empty?
     @feed_updated_at = Time.now unless @feed_updated_at
     
-    @feed_title = (tag.nil? || tag.title.blank?) ? "Grabbit feed for \"#{ params[:tag_name]}\"" : tag.title
+    @feed_title = (@tag.nil? || @tag.title.blank?) ? "Grabbit feed for \"#{ params[:tag_name]}\"" : @tag.title
     
     respond_to do |format|
       format.json { render :json => @download_jobs }

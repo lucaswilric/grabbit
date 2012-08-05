@@ -1,0 +1,15 @@
+// Place all the styles related to the Tags controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.tag .title { font-style: italic; }
+.tag .name { font-weight: bold; }
+.tag .rss { 
+    background: url(<%= asset_path 'feed-icon-14x14.png' %>) no-repeat;
+    display: block;
+    float: left;
+    margin: 3px;
+    padding-left: 19px;
+    
+    &:hover { text-decoration: none; }
+}
