@@ -1,6 +1,8 @@
 <h1>Grabbit: an RSS mash-together-er</h1>
 <hr />
 
+<p id="notice"><%= notice %></p>
+
 <div class="monitor span3">
     <h2 class="measurement"><%= link_to @dj_count.to_s, :controller => 'download_jobs', :action => 'index' %></h2>
     <div class="description">items mixed in the last 2 weeks</div>
