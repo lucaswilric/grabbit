@@ -20,9 +20,7 @@ pre {
   font-size: 11px; }
 
 a {
-  color: #000;
-  &:visited {
-    color: #666; } 
+  color: #000; 
 }
 
 div {
@@ -59,4 +57,13 @@ div {
 #user_greeting { 
     float: right; 
     margin-right: 20px;
+}
+.row {
+    border: 1px solid transparent;
+
+    &:hover {
+        background: #fbfbfb;
+        border: 1px solid #ddd;
+        border-radius: 9px;
+    }
 }

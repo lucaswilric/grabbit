@@ -1,22 +1,21 @@
-<h1>Listing download jobs</h1>
-
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Status</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
+<% 
+  title = "Items" 
+  if @tag
+    if @tag.title
+      title = @tag.title 
+    else
+      title += " tagged <em>#{@tag.name}</em>"
+    end
+  end
+%>
+<h1><%= title.html_safe %></h1>
+<hr />
 <% @download_jobs.each do |download_job| %>
-  <tr>
-    <td><%= download_job.title %></td>
-    <td><%= download_job.status %></td>
-    <td><%= link_to 'Show', download_job %></td>
-    <td><%= link_to 'Edit', edit_download_job_path(download_job) %></td>
-    <td><%= link_to 'Destroy', download_job, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
+  <div class="row">
+    <span class="span6"><%= link_to download_job.title, download_job.url %></span>
+    <span class="span2"><%= download_job.status %></span>
+    <span class="span1"><%= link_to 'Edit', edit_download_job_path(download_job), :class => 'btn btn-mini btn-primary' %></span>
+    <span class="span1"><%= link_to 'Destroy', { :id => download_job, :confirm => 'Are you sure?', :method => :delete }, :class => 'btn btn-mini' %></span>
+  </div>
 <% end %>
-</table>
 

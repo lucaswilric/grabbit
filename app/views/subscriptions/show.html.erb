@@ -1,18 +1,16 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Title:</b>
-  <%= @subscription.title %>
-</p>
+<h1><%= @subscription.title %></h1>
+<hr />
 
 <p>
   <b>Destination:</b>
-  <%= @subscription.destination %>
+  <%= @subscription.destination.blank? ? "<em>None</em>".html_safe : @subscription.destination %>
 </p>
 
 <p>
   <b>Extension:</b>
-  <%= @subscription.extension.present? ? '.' + @subscription.extension : '' %>
+  <%= @subscription.extension.present? ? '.' + @subscription.extension : "<em>None</em>".html_safe %>
 </p>
 
 <p>
