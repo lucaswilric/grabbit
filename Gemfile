@@ -40,7 +40,3 @@ end
 
 # OmniAuth for OpenID authentication
 gem 'omniauth-openid', :git => 'git://github.com/intridea/omniauth-openid.git'
-
-# OAuth Provider gem
-gem 'oauth2-provider', :require => 'oauth2/provider', :git => 'git://github.com/songkick/oauth2-provider'
-

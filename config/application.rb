@@ -49,7 +49,3 @@ module Grabbit3
     config.middleware.use "XOriginEnabler"
   end
 end
-
-OAuth2::Provider.realm = 'Grabbit'
-#OAuth2::Provider.enforce_ssl = true
-

@@ -1,7 +1,9 @@
 class SessionsController < ApplicationController
+  
   def new
+    redirect_to '/auth/open_id/'
   end
-
+  
   def create
     auth_hash = request.env['omniauth.auth']
  
@@ -21,6 +23,7 @@ class SessionsController < ApplicationController
   end
 
   def failure
+    redirect_to '/', :notice => params[:message]
   end
 
   def destroy

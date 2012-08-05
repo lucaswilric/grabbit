@@ -12,7 +12,7 @@ class DownloadJobsController < ApplicationController
   before_filter :get_user
   
   def login_required
-    redirect_to download_jobs_url unless session[:user_id]
+    redirect_to(download_jobs_url, :notice => "You'll need to log in for that.") unless session[:user_id]
   end
 
   def default_format_json

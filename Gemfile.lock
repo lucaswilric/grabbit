@@ -8,12 +8,13 @@ GIT
 
 GIT
   remote: git://github.com/songkick/oauth2-provider
-  revision: c5c6c8044f9e03dfa089ec1330c93e6395cdac6e
+  revision: bd6b74845f89d4a218ab4d4abf7caac75b90bcf7
   specs:
     oauth2-provider (0.1.0)
       activerecord
       bcrypt-ruby
       json
+      rack
 
 GEM
   remote: http://rubygems.org/

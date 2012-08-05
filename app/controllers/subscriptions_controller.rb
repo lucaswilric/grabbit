@@ -10,7 +10,7 @@ class SubscriptionsController < ApplicationController
   before_filter :get_user
   
   def login_required
-    redirect_to subscriptions_url unless session[:user_id]
+    redirect_to(subscriptions_url, :notice => "You'll need to log in for that.") unless session[:user_id]
   end
   
   def index
