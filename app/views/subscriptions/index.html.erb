@@ -1,27 +1,14 @@
-<h1>Listing subscriptions</h1>
-
+<h1>Subscriptions</h1>
+<hr/>
 <p id="notice"><%= notice %></p>
 
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Destination</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<p><%= link_to 'New Subscription', new_subscription_path, :class => 'btn' %></p>
 
 <% @subscriptions.each do |subscription| %>
-  <tr>
-    <td><%= subscription.title %></td>
-    <td><%= subscription.destination %></td>
-    <td><%= link_to 'Details', subscription %></td>
-    <td><%= link_to 'Edit', edit_subscription_path(subscription) %></td>
-    <td><%= link_to 'Unsubscribe', subscription, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
+  <div class="subscription row">
+  <span class="span6"><%= link_to subscription.title, subscription.url %></span>
+  <span class="span1"><%= link_to 'Edit', edit_subscription_path(subscription), :class => 'btn btn-primary btn-mini' %></span>
+  <span class="span2"><%= link_to 'Unsubscribe', { :id => subscription, :confirm => 'Are you sure?', :method => :delete }, :class => 'btn btn-mini' %></span>
+  </div>
 <% end %>
-</table>
 
-<br />
-
-<%= link_to 'New Subscription', new_subscription_path %>

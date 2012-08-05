@@ -6,12 +6,13 @@
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body class="offset2 span11">
 <div id="user_greeting">
 <% if @user %>
-You are logged in as <strong><%= @user.name || @user.open_id %></strong>. <a href="/logout">Log out</a>.
+<strong><%= @user.name || @user.open_id %></strong><br />
+<a href="/logout" class="btn">Log out</a>
 <% else %>
-You are not logged in. <a href="/auth/open_id/">Log in now</a>.
+<a href="/auth/open_id/" class="btn">Log in</a>
 <% end %>
 </div>
 
