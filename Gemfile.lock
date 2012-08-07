@@ -6,16 +6,6 @@ GIT
       omniauth (~> 1.0)
       rack-openid (~> 1.3.1)
 
-GIT
-  remote: git://github.com/songkick/oauth2-provider
-  revision: bd6b74845f89d4a218ab4d4abf7caac75b90bcf7
-  specs:
-    oauth2-provider (0.1.0)
-      activerecord
-      bcrypt-ruby
-      json
-      rack
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -48,7 +38,6 @@ GEM
     activesupport (3.1.3)
       multi_json (~> 1.0)
     arel (2.2.1)
-    bcrypt-ruby (3.0.1)
     builder (3.0.0)
     coffee-rails (3.1.1)
       coffee-script (>= 2.2.0)
@@ -162,7 +151,6 @@ DEPENDENCIES
   coffee-rails (~> 3.1.1)
   jquery-rails
   json
-  oauth2-provider!
   omniauth-openid!
   pg
   rails (= 3.1.3)
