@@ -7,7 +7,6 @@ class SubscriptionsController < ApplicationController
   # GET /subscriptions.json
   
   before_filter :login_required, :except => [:show, :index]
-  before_filter :get_user
   
   def login_required
     redirect_to(subscriptions_url, :notice => "You'll need to log in for that.") unless session[:user_id]

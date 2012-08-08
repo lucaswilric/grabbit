@@ -9,7 +9,6 @@ class DownloadJobsController < ApplicationController
 
   before_filter :default_format_json, :only => :feed
   before_filter :login_required, :except => [:index, :show, :feed, :search]
-  before_filter :get_user
   
   def login_required
     redirect_to(download_jobs_url, :notice => "You'll need to log in for that.") unless session[:user_id]
