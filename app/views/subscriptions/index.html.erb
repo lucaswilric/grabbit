@@ -19,7 +19,7 @@
   <div class="subscription row">
   <span class="span6"><%= link_to subscription.title, subscription.url %></span>
   <span class="span1"><%= link_to 'Edit', edit_subscription_path(subscription), :class => 'btn btn-primary btn-mini' %></span>
-  <span class="span2"><%= link_to 'Unsubscribe', { :id => subscription, :confirm => 'Are you sure?', :method => :delete }, :class => 'btn btn-mini' %></span>
+  <span class="span2"><%= link_to 'Unsubscribe', subscription, :method => :delete , :class => 'btn btn-mini', :confirm => 'Are you sure?' %></span>
   </div>
 <% end %>
 

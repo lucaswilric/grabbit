@@ -15,7 +15,7 @@
     <span class="span6"><%= link_to download_job.title, download_job.url %></span>
     <span class="span2"><%= download_job.status %></span>
     <span class="span1"><%= link_to 'Edit', edit_download_job_path(download_job), :class => 'btn btn-mini btn-primary' %></span>
-    <span class="span1"><%= link_to 'Destroy', { :id => download_job, :confirm => 'Are you sure?', :method => :delete }, :class => 'btn btn-mini' %></span>
+    <span class="span1"><%= link_to 'Destroy', download_job, :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-mini' %></span>
   </div>
 <% end %>
 
