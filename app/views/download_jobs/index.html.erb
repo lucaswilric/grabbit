@@ -18,4 +18,5 @@
     <span class="span1"><%= link_to 'Destroy', download_job, :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-mini' %></span>
   </div>
 <% end %>
+<%= will_paginate @download_jobs, :renderer => BootstrapPagination::Rails %>
 

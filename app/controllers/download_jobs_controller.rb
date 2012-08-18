@@ -21,16 +21,18 @@ class DownloadJobsController < ApplicationController
   # GET /download_jobs
   # GET /download_jobs.json
   def index
+    djs = nil
+    conditions = { :user_id => [nil, (@user ? @user.id : nil)] }
+    order = 'download_jobs.id desc'
+  
     if params[:tag_name]
-      @download_jobs = Tag.find_by_name(params[:tag_name]).download_jobs.order('download_jobs.id desc').limit(100)
       @tag = Tag.find_by_name(params[:tag_name])
+      djs = @tag.download_jobs
     elsif params[:subscription_id]
-      @download_jobs = Subscription.find(params[:subscription_id]).download_jobs.order('download_jobs.id desc').limit(100)
-    else
-      @download_jobs = DownloadJob.order('download_jobs.id desc').limit(100)
+      djs = Subscription.find(params[:subscription_id]).download_jobs
     end
     
-    @download_jobs.reject! {|d| d.user and d.user != @user}
+    @download_jobs = (djs || DownloadJob).where(conditions).paginate(:page => params[:page]).order(order)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -43,7 +45,11 @@ class DownloadJobsController < ApplicationController
     @tag_name = params[:tag_name]
     @tag = Tag.find_by_name(@tag_name)
 
-    @download_jobs = @tag.download_jobs_for_feed(30, @user)
+    @download_jobs = @tag.download_jobs
+      .where(:status => [Status[:not_started], Status[:retry]], :user_id => [nil, (@user ? @user.id : nil)])
+      .order('download_jobs.id desc')
+      .paginate(:page => params[:page])
+
     
     @feed_updated_at = @download_jobs.first.updated_at || @download_jobs.first.created_at unless @download_jobs.empty?
     @feed_updated_at = Time.now unless @feed_updated_at

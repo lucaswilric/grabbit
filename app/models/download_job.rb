@@ -37,6 +37,8 @@ class DownloadJob < ActiveRecord::Base
   before_validation :set_initial_attributes, :on => :create
   after_create :adopt_tags_from_subscription
   
+  self.per_page = 30
+  
   def set_initial_attributes
     self.status = Status[:not_started]
   end

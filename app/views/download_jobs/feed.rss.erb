@@ -1,21 +1,21 @@
 <?xml version="1.0"?>
 <rss version="2.0">
 	<channel>
-		<title><%= @feed_title %></title>
+		<title><%= h @feed_title %></title>
 		<link><%= root_url.chomp('/') + download_jobs_path %>/tagged/<%= @tag_name %>/feed.rss</link>
-		<description>A list of items tagged "<%= @tag_name %>", from the Grabbit RSS feed combiner.</description>
+		<description>A list of items tagged "<%= h @tag_name %>", from the Grabbit RSS feed combiner.</description>
 		<language>en-us</language>
 		<pubDate><%= @feed_updated_at.to_formatted_s(:rfc822) %></pubDate>
 		<docs>http://cyber.law.harvard.edu/rss/rss.html</docs>
 		<generator>Grabbit v3</generator>
 		<% @download_jobs.each do |dj| %>
 		<item>
-			<title><%= dj.title %></title>
+			<title><%= h dj.title %></title>
 			<link><%= dj.url %></link>
 			<guid isPermaLink="true"><%= root_url.chomp('/') + download_job_path(dj.id) %></guid>
 			<pubDate><%= dj.updated_at.to_formatted_s(:rfc822) %></pubDate>
 			<% dj.tags.each do |tag| %>
-			<category><%= tag.name %></category>
+			<category><%= h tag.name %></category>
 			<% end %>
 			<% if @tag.show_source && dj.subscription %>
 			<source url="<%= dj.subscription.url %>"><%= dj.subscription.title %></source>
