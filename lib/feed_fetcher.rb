@@ -55,7 +55,7 @@ class FeedFetcher
 
         debug "#{item_url} | #{sub.created_at} | #{published.to_s}"
         
-        next unless item_url and (published || Time.now) > sub.created_at
+        next unless item_url and (published || Time.now) > sub.created_at and published > 1.week.ago
 
         begin
           dl = DownloadJob.create(:subscription => sub, :title => get_name(item,sub), :url => item_url)
