@@ -12,7 +12,7 @@
       </span>
       <span class="span4 title"><%= tag.title %>&nbsp;</span>
       <span class="span1"><%= link_to 'Edit', edit_tag_path(tag), :class => 'btn btn-primary btn-mini' %></span>
-      <span class="span2"><%= link_to 'Destroy', { :id => tag, :confirm => 'Are you sure?', :method => :delete }, :class => 'btn btn-mini' %></span>
+      <span class="span2"><%= link_to 'Destroy', tag, :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-mini' %></span>
   </div>
 <% end %>
 
