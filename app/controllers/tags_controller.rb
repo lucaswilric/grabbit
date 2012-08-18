@@ -30,6 +30,19 @@ class TagsController < ApplicationController
     end
   end
   
+  # DELETE /tags/1
+  # DELETE /tags/1.json
+  def destroy
+    @tag = Tag.find(params[:id])
+    @tag.destroy
+    
+    respond_to do |format|
+      format.html { redirect_to tags_url }
+      format.json { head :ok }
+    end
+
+  end
+  
   private
   
   def find_tag(id)
