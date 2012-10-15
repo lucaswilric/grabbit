@@ -6,17 +6,29 @@
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
-<body class="offset1 span11">
-<div id="user_greeting">
-<% if @user %>
-<strong><%= @user.name || @user.open_id %></strong><br />
-<a href="/logout" class="btn">Log out</a>
-<% else %>
-<a href="/auth/open_id/" class="btn">Log in</a>
-<% end %>
+<body>
+<div class="navbar">
+  <div class="navbar-inner">
+    <a class="brand" href="#">Grabbit</a>
+    <ul class="nav">
+      <li><a href="/">Home</a></li>
+      <li><a href="<%= subscriptions_url %>">Subscriptions</a></li>
+      <li><a href="<%= tags_url %>">Feeds</a></li>
+      <li><a href="<%= download_jobs_url %>">Items</a></li>
+    </ul>
+  </div>
 </div>
-
-<%= yield %>
-
+<div id="container" class="offset1 span11">
+  <div id="user_greeting">
+  <% if @user %>
+  <strong><%= @user.name || @user.open_id %></strong><br />
+  <a href="/logout" class="btn">Log out</a>
+  <% else %>
+  <a href="/auth/open_id/" class="btn">Log in</a>
+  <% end %>
+  </div>
+  
+  <%= yield %>
+</div>
 </body>
 </html>
