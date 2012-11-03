@@ -35,6 +35,12 @@ describe DownloadJob do
       })
       dj.tags.should have(3).things
     end
+    
+    it 'does not save if a pending download already exists for the first 1023 characters of its URL' do
+      DownloadJob.create(:url => 'a' * 1023)
+      
+      DownloadJob.create(:url => 'a' * 1024).should have(1).errors_on(:base)
+    end
   end
   
   context 'when finding by tag' do

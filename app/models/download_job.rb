@@ -10,12 +10,17 @@ Status = {
 }
 
 class DownloadJobValidator < ActiveModel::Validator
+  # Maximum length of a URL, as defined in the DB.
+  UrlMaxLength = 1023
+
   def validate(record)
-    record.errors[:base] << "This URL is already waiting to be downloaded" if pending_download_exists(record)
+    record.errors[:base] << "This item is a duplicate." if pending_download_exists(record)
   end
   
   def pending_download_exists(record)
-    jobs = DownloadJob.where(:url =>  record.url, :subscription_id => (record.subscription ? record.subscription.id : nil))
+    search_url = record.url.length > UrlMaxLength ? record.url[0..UrlMaxLength-1] : record.url
+  
+    jobs = DownloadJob.where(:url => search_url, :subscription_id => (record.subscription ? record.subscription.id : nil))
     
     job_count = jobs.where(:status => [Status[:not_started], Status[:in_progress], Status[:retry]]).length
     job_count += jobs.where(["status = ? and updated_at > ?", Status[:finished], 6.months.ago]).length
