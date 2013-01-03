@@ -45,3 +45,5 @@ gem 'omniauth-openid', :git => 'git://github.com/intridea/omniauth-openid.git'
 
 gem 'will_paginate', '>= 3.0.3'
 gem 'will_paginate-bootstrap'
+
+gem 'newrelic_rpm'
