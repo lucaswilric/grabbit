@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130106014703) do
+ActiveRecord::Schema.define(:version => 20130227121317) do
 
   create_table "download_jobs", :force => true do |t|
     t.string   "title"
@@ -63,6 +63,8 @@ ActiveRecord::Schema.define(:version => 20130106014703) do
     t.string   "title"
     t.boolean  "show_source", :default => true
   end
+
+  add_index "tags", ["name", "id"], :name => "index_tags_on_name_and_id"
 
   create_table "users", :force => true do |t|
     t.string   "name"
