@@ -45,11 +45,14 @@ class DownloadJobsController < ApplicationController
     @tag_name = params[:tag_name]
     @tag = Tag.find_by_name(@tag_name)
 
-    @download_jobs = @tag.download_jobs
-      .where(:status => [Status[:not_started], Status[:retry]], :user_id => [nil, (@user ? @user.id : nil)])
-      .order('download_jobs.id desc')
-      .paginate(:page => params[:page])
-
+    if @tag.nil?
+      @download_jobs = []
+    else
+      @download_jobs = @tag.download_jobs
+        .where(:status => [Status[:not_started], Status[:retry]], :user_id => [nil, (@user ? @user.id : nil)])
+        .order('download_jobs.id desc')
+        .paginate(:page => params[:page])
+    end
     
     @feed_updated_at = @download_jobs.first.updated_at || @download_jobs.first.created_at unless @download_jobs.empty?
     @feed_updated_at = Time.now unless @feed_updated_at
