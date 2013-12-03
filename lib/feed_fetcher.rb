@@ -100,9 +100,12 @@ class FeedFetcher
   end
 
   def self.get_name(item, sub)
-    t = item.title if item.is_a? RSS::Rss::Channel::Item
-    t = item.title.content if item.is_a? RSS::Atom::Feed::Entry
-    
+    if item.is_a? RSS::Rss::Channel::Item
+      t = item.title || item.description.slice(0, 200)
+    elsif item.is_a? RSS::Atom::Feed::Entry
+      t = item.title.try(:content) || item.content.try(:content)
+    end
+
     t || "#{ sub.name } #{ Time.zone.now.to_s }"
   end
   
