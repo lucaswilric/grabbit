@@ -15,13 +15,22 @@
 
 <p><%= link_to 'New Subscription', new_subscription_path, :class => 'btn' if @user %></p>
 
-<% @subscriptions.each do |subscription| %>
-  <div class="subscription row">
-  <span class="span6"><%= link_to subscription.title, subscription.url %></span>
-  <%- if @user %>
-    <span class="span1"><%= link_to 'Edit', edit_subscription_path(subscription), :class => 'btn btn-primary btn-mini' %></span>
-    <span class="span2"><%= link_to 'Unsubscribe', subscription, :method => :delete , :class => 'btn btn-mini', :confirm => 'Are you sure?' %></span>
-  <%- end %>
-  </div>
-<% end %>
-
+<table>
+  <tr class="subscription row">
+    <th class="span6">Title</th>
+    <th class="span1">Items</th>
+    <%- if @user %>
+    <th class="span3" colspan=2></th>
+    <%- end %>
+  </tr>
+  <% @subscriptions.each do |subscription| %>
+    <tr class="subscription row">
+      <td class="span6"><%= link_to subscription.title, subscription.url %></td>
+      <td class="span1"><%= link_to subscription.download_jobs.count, url_for(subscription) %></td>
+      <%- if @user %>
+        <td class="span1"><%= link_to 'Edit', edit_subscription_path(subscription), :class => 'btn btn-primary btn-mini' %></td>
+        <td class="span2"><%= link_to 'Unsubscribe', subscription, :method => :delete , :class => 'btn btn-mini', :confirm => 'Are you sure?' %></td>
+      <%- end %>
+    </tr>
+  <% end %>
+</table>
