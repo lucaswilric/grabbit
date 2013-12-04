@@ -48,9 +48,9 @@ class DownloadJobsController < ApplicationController
     if @tag.nil?
       @download_jobs = []
     else
-      @download_jobs = @tag.download_jobs
-        .where(:status => [Status[:not_started], Status[:retry]], :user_id => [nil, (@user ? @user.id : nil)])
-        .order('download_jobs.id desc')
+      @download_jobs = @tag.download_jobs \
+        .where(:status => [Status[:not_started], Status[:retry]], :user_id => [nil, (@user ? @user.id : nil)]) \
+        .order('download_jobs.id desc') \
         .paginate(:page => params[:page])
     end
     
