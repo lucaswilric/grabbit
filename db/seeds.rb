@@ -6,5 +6,5 @@
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Emanuel', :city => cities.first)
 
-User.find_or_create({:name => 'Lucas Wilson-Richter', :open_id => 'http://openid.lucasrichter.id.au/'})
+User.where({:name => 'Lucas Wilson-Richter', :open_id => 'http://openid.lucasrichter.id.au/'}).first_or_create
 
