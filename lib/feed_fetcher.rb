@@ -61,7 +61,7 @@ class FeedFetcher
         begin
           dl = DownloadJob.create(:subscription => sub, :title => get_name(item,sub), :url => item_url)
           if (dl.id?)
-            debug dl.id.to_s
+            #debug dl.id.to_s
             new_item_count += 1
           else
             warn dl.errors.messages.to_s
