@@ -7,7 +7,7 @@ end
 
 desc "Persistent job to keep fetching feeds forever"
 task :fetch_feeds_forever => :environment do
-  puts "START"
+  puts "Starting fetch_feeds_forever in #{Rails.env}"
      
   until 2 < 1 do
     puts "Fetching feeds at [#{Time.now}]"
