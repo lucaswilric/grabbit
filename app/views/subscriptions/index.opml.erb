@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<opml version="2.0">
+  <head>
+    <title>Grabbit subscriptions<%= " tagged '#{ @tag }'" unless @tag.blank? %></title>
+    <dateCreated><%= @subscriptions.first.created_at.to_s(:rfc5322) %></dateCreated>
+    <dateModified><%= @subscriptions.last.updated_at.to_s(:rfc5322) %></dateModified>
+    <ownerName>Lucas Wilson-Richter</ownerName>
+    <ownerEmail>grabbit@lucasrichter.id.au</ownerEmail>
+  </head>
+  <body>
+  <% @subscriptions.each do |subscription| %>
+    <outline text="<%= subscription.title %>" title="<%= subscription.title %>" type="rss" xmlUrl="<%= subscription.url %>"/>
+  <% end %>
+  </body>
+</opml>

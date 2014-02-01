@@ -25,6 +25,7 @@ class SubscriptionsController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.json { render :json => @subscriptions }
+      format.opml # index.opml.erb
     end
   end
 
